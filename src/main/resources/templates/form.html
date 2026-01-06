@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <form th:action="@{/Time-Since}" method="post">
+    <label>Select Date/Time:</label>
+    <input type="datetime-local" id="selectedDate" name="localDateTime" required>
+    <button type="submit">Calculate Duration</button>
+    </form>
+
+    <div>
+        <p th:if="${result != null}">Result: <span th:text="${result}"></span></p>
+    </div>
+
+
+</body>
+
+</html>

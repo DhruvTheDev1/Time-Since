@@ -12,8 +12,7 @@ public class TimeService {
 
   public String calculateTimeSince(LocalDateTime selectedInput) {
     LocalDateTime currTime = LocalDateTime.now(); // retrieves curr date/time
-    Period period = Period.between(selectedInput.toLocalDate(), currTime.toLocalDate()); // period of years, months,
-                                                                                         // days between the two days
+    Period period = Period.between(selectedInput.toLocalDate(), currTime.toLocalDate()); // period between selected and current day
 
     Duration duration = Duration.between(selectedInput, currTime); // calculates hours, mins, seconds
 
@@ -31,7 +30,7 @@ public class TimeService {
   // testing
   public static void main(String[] args) {
     TimeService timeService = new TimeService();    
-    LocalDateTime selectedInput = LocalDateTime.of(2026, 01, 02, 16, 05, 0);
+    LocalDateTime selectedInput = LocalDateTime.of(2026, 01, 06, 14, 20);
     String result = timeService.calculateTimeSince(selectedInput);
     
     System.out.println(result); 
