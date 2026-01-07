@@ -4,20 +4,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Time-Since Calculator</title>
 </head>
 
 <body>
 
+  <h1>Time Calculator</h1>
+  <h3>How many years, months, days, seconds since </h3>
+
+
   <form th:action="@{/Time-Since}" method="post">
+    <label for="durationFormat">Change Duration Type:</label>
+    <select id="durationFormat" name="durationFormat" required>
+      <option value="Years">Years, Months, Days, Hours</option>
+      <option value="Months">Months, Days, Hours, Minutes</option>
+      <option value="Weeks">Weeks, Days, Hours, Minutes</option>
+      <option value="Days" selected>Days, Hours, Minutes, Seconds</option>
+      <option value="Hours">Hours, Minutes, Seconds</option>
+    </select>
+    <br>
+    <br>
+
+
     <label>Select Date/Time:</label>
     <input type="datetime-local" id="selectedDate" name="localDateTime" required>
     <button type="submit">Calculate Duration</button>
-    </form>
+  </form>
 
-    <div>
-        <p th:if="${result != null}">Result: <span th:text="${result}"></span></p>
-    </div>
+  <div>
+    <p th:if="${result != null}"><span th:text="${result}"></span></p>
+  </div>
 
 
 </body>
