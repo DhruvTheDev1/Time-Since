@@ -3,6 +3,7 @@ package com.dhruvthedev1.time_since;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.stereotype.Service;
 
@@ -13,64 +14,59 @@ public class TimeService {
   public String calculateTimeSince(LocalDateTime selectedInput, String durationFormat) {
     // retrieves curr date/time
     LocalDateTime currTime = LocalDateTime.now();
-    // period between selected and current day
+    // years, months, days difference
     Period period = Period.between(selectedInput.toLocalDate(), currTime.toLocalDate());
-
-    // calculates hours, mins seconds
+    // hours, minutes, seconds difference
     Duration duration = Duration.between(selectedInput, currTime);
 
-    // calculates the remaning hours, minutes and seconds
-    // e.g. 58 hours, 130 seconds, 4500 seconds
-    long days = period.getDays(); // gives full days (2)
-    long hours = duration.toHours() % 24; // gives remaning hours after full day (58 % 24 = 10)
-    long minutes = duration.toMinutes() % 60; // gives remaining minutes (130 % 60 = 10)
-    long seconds = duration.toSeconds() % 60; // gives remaning seconds (4500 % 60 = 0)
+    long totalDays = ChronoUnit.DAYS.between(selectedInput, currTime);
+    long totalHours = duration.toHours();
+    // calculates hours, mins, seconds
+    long remainingHours = duration.toHoursPart();
+    long remainingMinutes = duration.toMinutesPart();
+    long remaningSeconds = duration.toSecondsPart();
 
     // calculating duration based on different formats
     if (durationFormat.equals("Years")) {
-      return formatYears(period, days, hours);
+      return formatYears(period, remainingHours);
     } else if (durationFormat.equals("Months")) {
-      return formatMonths(period, days, hours, minutes);
+      return formatMonths(period, remainingHours, remainingMinutes);
     } else if (durationFormat.equals("Weeks")) {
-      return formatWeeks(days, hours, minutes);
+      return formatWeeks(totalDays, remainingHours, remainingMinutes);
     } else if (durationFormat.equals("Days")) {
-      // returns a readable format 2 days, 10 hours, 10 minutes, 0 seconds
-      return String.format("%d days %d hours %d minutes %d seconds", days, hours, minutes, seconds);
+      return String.format("%d days %d hours %d minutes %d seconds", totalDays, remainingHours, remainingMinutes, remaningSeconds);
     } else if (durationFormat.equals("Hours")) {
-      return formatHours(duration, minutes, seconds);
+      return formatHours(totalHours, remainingMinutes, remaningSeconds);
     }
 
     return "Invalid format";
 
   }
 
-  private String formatYears(Period period, long days, long hours) {
-    long years = period.getYears();
-    long months = period.getMonths();
-    return String.format("%d years %d months %d days %d hours", years, months, days, hours);
+  private String formatYears(Period period, long hours) {
+    return String.format("%d years %d months %d days %d hours", period.getYears(), period.getMonths(), period.getDays(), hours);
   }
 
-  private String formatMonths(Period period, long days, long hours, long minutes) {
-    long months = period.getMonths();
-    return String.format("%d months %d days %d hours %d minutes", months, days, hours, minutes);
+  private String formatMonths(Period period, long hours, long minutes) {
+long totalMonths = (period.getYears() * 12L) + period.getMonths();    
+return String.format("%d months %d days %d hours %d minutes", totalMonths, period.getDays(), hours, minutes);
   }
 
-  private String formatWeeks(long days, long hours, long minutes) {
-    long weeks = days / 7;
-    long remainingDays = days % 7;
+  private String formatWeeks(long totalDays, long hours, long minutes) {
+    long weeks = totalDays / 7;
+    long remainingDays = totalDays % 7;
     return String.format("%d weeks %d days %d hours %d minutes", weeks, remainingDays, hours, minutes);
   }
 
-  private String formatHours(Duration duration, long minutes, long seconds) {
-    long totalHours = duration.toHours();
+  private String formatHours(long totalHours, long minutes, long seconds) {
     return String.format("%d hours %d minutes %d seconds", totalHours, minutes, seconds);
   }
 
   // testing
   public static void main(String[] args) {
     TimeService timeService = new TimeService();
-    LocalDateTime selectedInput = LocalDateTime.of(2026, 01, 07, 14, 0);
-    String durationFormat = "Months";
+    LocalDateTime selectedInput = LocalDateTime.of(2020, 01, 16, 14, 20); 
+    String durationFormat = "Days";
     String calculateTime = timeService.calculateTimeSince(selectedInput, durationFormat);
 
     System.out.println(calculateTime);
