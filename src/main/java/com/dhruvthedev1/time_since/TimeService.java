@@ -24,7 +24,7 @@ public class TimeService {
     // calculates hours, mins, seconds
     long remainingHours = duration.toHoursPart();
     long remainingMinutes = duration.toMinutesPart();
-    long remaningSeconds = duration.toSecondsPart();
+    long remainingSeconds = duration.toSecondsPart();
 
     // calculating duration based on different formats
     if (durationFormat.equals("Years")) {
@@ -34,9 +34,9 @@ public class TimeService {
     } else if (durationFormat.equals("Weeks")) {
       return formatWeeks(totalDays, remainingHours, remainingMinutes);
     } else if (durationFormat.equals("Days")) {
-      return String.format("%d days %d hours %d minutes %d seconds", totalDays, remainingHours, remainingMinutes, remaningSeconds);
+      return String.format("%d days %d hours %d minutes %d seconds", totalDays, remainingHours, remainingMinutes, remainingSeconds);
     } else if (durationFormat.equals("Hours")) {
-      return formatHours(totalHours, remainingMinutes, remaningSeconds);
+      return formatHours(totalHours, remainingMinutes, remainingSeconds);
     }
 
     return "Invalid format";
@@ -65,7 +65,7 @@ return String.format("%d months %d days %d hours %d minutes", totalMonths, perio
   // testing
   public static void main(String[] args) {
     TimeService timeService = new TimeService();
-    LocalDateTime selectedInput = LocalDateTime.of(2020, 01, 16, 14, 20); 
+    LocalDateTime selectedInput = LocalDateTime.of(2026, 01, 9, 14, 20); 
     String durationFormat = "Days";
     String calculateTime = timeService.calculateTimeSince(selectedInput, durationFormat);
 
