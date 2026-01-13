@@ -13,7 +13,7 @@
   <h3>How many years, months, days, seconds since </h3>
 
 
-  <form th:action="@{/Time-Since}" method="post">
+  <form id ="timeform" th:action="@{/Time-Since}" method="post">
     <label for="durationFormat">Change Duration Type:</label>
     <select id="durationFormat" name="durationFormat" required>
       <option value="Years">Years, Months, Days, Hours</option>
@@ -32,10 +32,11 @@
   </form>
 
   <div>
-    <p th:if="${result != null}"><span th:text="${result}"></span></p>
+    <p th:if="${result != null}"><span id="resultDisplay" th:text="${result}"></span></p>
   </div>
 
-  <script src="timePolling.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/timePolling.js"></script>
 
 </body>
 

@@ -1,4 +1,4 @@
-// JQuery to update the results dynamically
+// updates the results dynamically
 let updateInterval;
 
 $(document).ready(function () {
@@ -14,10 +14,17 @@ $(document).ready(function () {
     }
 
     updateTime(selectedDate, durationFormat);
-
+    // polls every 1 second
     updateInterval = setInterval(function () {
       updateTime(selectedDate, durationFormat);
-    }, 1000);  // polls every 1 second
+    }, 1000);
+  });
+
+  // stops polling if user leaves page
+  $(window).on('beforeunload', function () {
+    if (updateInterval) {
+      clearInterval(updateInterval);
+    }
   });
 });
 
@@ -25,14 +32,16 @@ function updateTime(selectedDate, durationFormat) {
   $.ajax({
     url: '/Time-Since',
     method: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
+    data: {
       localDateTime: selectedDate,
       durationFormat: durationFormat
-    }),
-    success: function (data) {
-      // update the time
-      $('#resultDisplay').text(data.result);
+    },
+    // updates results
+    success: function (response) {
+      $('#resultDisplay').text(response.result);
+    },
+    error: function() {
+      console.error("error"); // debugging
     }
   });
 }
