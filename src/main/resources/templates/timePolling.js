@@ -8,7 +8,7 @@ $(document).ready(function () {
     const selectedDate = $('#selectedDate').val();
     const durationFormat = $('#durationFormat').val();
 
-    // stops prev polling when form is resubmitted for example
+    // stops previous polling when form is resubmitted for example
     if (updateInterval) {
       clearInterval(updateInterval);
     }

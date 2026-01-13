@@ -10,7 +10,7 @@ public class TimeData {
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   @NotNull(message = "Cannot be empty")
   private LocalDateTime localDateTime;
-  private String durationFormat;
+  private DurationFormat durationFormat;
 
   public TimeData() {
   }
@@ -23,11 +23,11 @@ public class TimeData {
     this.localDateTime = localDateTime;
   }
 
-  public String getDurationFormat() {
+  public DurationFormat getDurationFormat() {
     return durationFormat;
   }
 
-  public void setDurationFormat(String durationFormat) {
+  public void setDurationFormat(DurationFormat durationFormat) {
     this.durationFormat = durationFormat;
   }
 

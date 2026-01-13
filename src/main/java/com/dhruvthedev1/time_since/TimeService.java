@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 // accepts duration format too
 @Service
 public class TimeService {
-  public String calculateTimeSince(LocalDateTime selectedInput, String durationFormat) {
+  public String calculateTimeSince(LocalDateTime selectedInput, DurationFormat durationFormat) {
     // retrieves curr date/time
     LocalDateTime currTime = LocalDateTime.now();
     // years, months, days difference
@@ -27,15 +27,15 @@ public class TimeService {
     long remainingSeconds = duration.toSecondsPart();
 
     // calculating duration based on different formats
-    if (durationFormat.equals("Years")) {
+    if (durationFormat == DurationFormat.Years) {
       return formatYears(period, remainingHours);
-    } else if (durationFormat.equals("Months")) {
+    } else if (durationFormat == DurationFormat.Months) {
       return formatMonths(period, remainingHours, remainingMinutes);
-    } else if (durationFormat.equals("Weeks")) {
+    } else if (durationFormat == DurationFormat.Weeks) {
       return formatWeeks(totalDays, remainingHours, remainingMinutes);
-    } else if (durationFormat.equals("Days")) {
+    } else if (durationFormat == DurationFormat.Days) {
       return String.format("%d days %d hours %d minutes %d seconds", totalDays, remainingHours, remainingMinutes, remainingSeconds);
-    } else if (durationFormat.equals("Hours")) {
+    } else if (durationFormat == DurationFormat.Hours) {
       return formatHours(totalHours, remainingMinutes, remainingSeconds);
     }
 
@@ -66,7 +66,7 @@ return String.format("%d months %d days %d hours %d minutes", totalMonths, perio
   public static void main(String[] args) {
     TimeService timeService = new TimeService();
     LocalDateTime selectedInput = LocalDateTime.of(2026, 01, 9, 14, 20); 
-    String durationFormat = "Days";
+    DurationFormat durationFormat = DurationFormat.Days;
     String calculateTime = timeService.calculateTimeSince(selectedInput, durationFormat);
 
     System.out.println(calculateTime);

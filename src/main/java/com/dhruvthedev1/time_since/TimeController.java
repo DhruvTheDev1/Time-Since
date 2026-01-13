@@ -23,7 +23,7 @@ public class TimeController {
   // based on duration format selected by user
   @PostMapping("/Time-Since")
   public String calculateTimeSinceDate(@ModelAttribute TimeData input, Model model) {
-    String durationFormat = input.getDurationFormat();
+    DurationFormat durationFormat = input.getDurationFormat();
     String result = timeService.calculateTimeSince(input.getLocalDateTime(), durationFormat);
     model.addAttribute("result", result);
     return "form";
