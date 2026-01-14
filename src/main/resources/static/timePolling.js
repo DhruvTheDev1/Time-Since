@@ -17,6 +17,13 @@ $(document).ready(function () {
    performUpdate();
    updateInterval = setInterval(performUpdate, 1000);
   });
+
+  // automatically recalculates duration format when changed
+  $('#durationFormat').on('change', function() {
+    if($('#selectedDate').val()) {
+      $('#timeForm').submit();
+    }
+  });
 });
 
 function updateTime(selectedDate, durationFormat) {
