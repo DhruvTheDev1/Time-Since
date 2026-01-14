@@ -8,23 +8,14 @@ $(document).ready(function () {
     const selectedDate = $('#selectedDate').val();
     const durationFormat = $('#durationFormat').val();
 
-    // stops previous polling when form is resubmitted for example
+    // stops prev polling
     if (updateInterval) {
       clearInterval(updateInterval);
     }
 
-    updateTime(selectedDate, durationFormat);
-    // polls every 1 second
-    updateInterval = setInterval(function () {
-      updateTime(selectedDate, durationFormat);
-    }, 1000);
-  });
-
-  // stops polling if user leaves page
-  $(window).on('beforeunload', function () {
-    if (updateInterval) {
-      clearInterval(updateInterval);
-    }
+   const performUpdate = () => updateTime(selectedDate, durationFormat);
+   performUpdate();
+   updateInterval = setInterval(performUpdate, 1000);
   });
 });
 
@@ -36,12 +27,6 @@ function updateTime(selectedDate, durationFormat) {
       localDateTime: selectedDate,
       durationFormat: durationFormat
     },
-    // updates results
-    success: function (response) {
-      $('#resultDisplay').text(response.result);
-    },
-    error: function() {
-      console.error("error"); // debugging
-    }
+      success: (response) =>  $('#resultDisplay').text(response.result)
   });
 }
