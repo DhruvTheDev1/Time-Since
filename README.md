@@ -24,3 +24,7 @@ The user can display the time passed in a variety of formats.
 <img width="466" height="368" alt="image" src="https://github.com/user-attachments/assets/2c10bd61-bd43-4179-8b14-dd4018744f65" />
 
 <img width="465" height="327" alt="image" src="https://github.com/user-attachments/assets/df9374b2-dd34-413e-a242-49067f8eff3c" />
+
+## Further Work
+- Adding CSS to make the front-end more user-friendly and appealing.
+- Currently the application uses 1 second AJAX polling which is inefficient for a real world application hence transitioning to WebSockets can reduce server load and be more efficient.
